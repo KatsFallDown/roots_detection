@@ -23,7 +23,7 @@ class GroupDB:
         self.__session.commit()
         return new_group.id
 
-    def add_students(self, student_id: int, group_id: int):
+    def add_student(self, student_id: int, group_id: int):
         student = self.__session.query(Student).filter_by(id=student_id).first()
         group = self.__session.query(Group).filter_by(id=group_id).first()
 
@@ -33,3 +33,94 @@ class GroupDB:
             return True
 
         return False
+
+    def head(self, value: int):
+        groups = self.__session.query(Group).limit(value).all()
+        for group in groups:
+            print(group)
+
+    def set_number(self, group_id: int, new_number: int):
+        group = self.__session.query(Group).filter_by(id=group_id).first()
+
+        if group:
+            group.number = new_number
+            self.__session.commit()
+            return True
+
+        return False
+
+    def set_class_letter(self, group_id: int, new_class_letter: str):
+        group = self.__session.query(Group).filter_by(id=group_id).first()
+
+        if group:
+            group.class_letter = new_class_letter
+            self.__session.commit()
+            return True
+
+        return False
+
+    def set_tutor_first_name(self, group_id: int, tutor_first_name: str):
+        group = self.__session.query(Group).filter_by(id=group_id).first()
+
+        if group:
+            group.tutor_first_name = tutor_first_name
+            self.__session.commit()
+            return True
+
+        return False
+
+    def set_tutor_second_name(self, group_id: int, tutor_second_name: str):
+        group = self.__session.query(Group).filter_by(id=group_id).first()
+
+        if group:
+            group.tutor_second_name = tutor_second_name
+            self.__session.commit()
+            return True
+
+        return False
+
+    def set_tutor_patronymic(self, group_id: int, tutor_patronymic: str):
+        group = self.__session.query(Group).filter_by(id=group_id).first()
+
+        if group:
+            group.tutor_patronymic = tutor_patronymic
+            self.__session.commit()
+            return True
+
+        return False
+
+    def set_tutor_link(self, group_id: int, tutor_link: str):
+        group = self.__session.query(Group).filter_by(id=group_id).first()
+
+        if group:
+            group.tutor_link = tutor_link
+            self.__session.commit()
+            return True
+
+        return False
+
+    def set_info(self, group_id: int, info: int):
+        group = self.__session.query(Group).filter_by(id=group_id).first()
+
+        if group:
+            group.info = info
+            self.__session.commit()
+            return True
+
+        return False
+
+    def get_group_info(self, id: int):
+        group = self.__session.query(Group).filter_by(id=id).first()
+
+        info = {
+            'id': group.id,
+            'number': group.number,
+            'class_letter': group.class_letter,
+            'tutor_first_name': group.tutor_first_name,
+            'tutor_second_name': group.tutor_second_name,
+            'tutor_patronymic': group.tutor_patronymic,
+            'tutor_link': group.tutor_link,
+            'info': group.info,
+            'students': [student.id for student in group.students]
+        }
+        return info if info else False
