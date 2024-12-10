@@ -1,0 +1,1645 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>865</width>
+    <height>696</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* Общее оформление окна */
+QMainWindow {
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
+                                stop:0 #d4e4ff, stop:1 #ffffff); /* Яркий градиент */
+    border: none;
+}
+
+/* Заголовки, такие как QLabel для разделов */
+QLabel {
+    font-size: 16px;
+    font-weight: bold;
+    color: #4a4a4a; /* Тёмно-серый текст */
+    padding: 5px;
+}
+
+/* Поля ввода */
+QLineEdit {
+    background-color: #ffffff; /* Белый фон */
+    border: 2px solid #c4c4c4; /* Серые границы */
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 14px;
+}
+
+QLineEdit:focus {
+    border-color: #98AFE1; /* Цвет акцента при фокусе */
+}
+
+/* Кнопки */
+QPushButton {
+    background-color: #98AFE1; /* Цвет кнопок */
+    color: white;             /* Белый текст */
+    border: 2px solid #5c6e96; /* Цвет границы */
+    border-radius: 8px;
+    font-size: 14px;
+    padding: 8px 12px;
+}
+
+QPushButton:hover {
+    background-color: #5c6e96; /* Цвет кнопки при наведении */
+}
+
+QPushButton:pressed {
+    background-color: #4b587a; /* Цвет кнопки при нажатии */
+}
+
+/* Текстовые поля и списки */
+QTextEdit, QPlainTextEdit {
+    background-color: #ffffff; /* Белый фон */
+    border: 2px solid #c4c4c4; /* Границы */
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+    color: #333333;
+}
+
+QTextEdit:focus, QPlainTextEdit:focus {
+    border-color: #98AFE1; /* Акцент при фокусе */
+}
+
+/* Таблицы */
+QTableWidget {
+    background-color: #ffffff;
+    border: 1px solid #c4c4c4;
+    gridline-color: #e0e0e0;
+    font-size: 14px;
+    color: #333333;
+}
+
+QHeaderView::section {
+    background-color: #98AFE1; /* Заголовки таблиц */
+    color: white;
+    font-weight: bold;
+    padding: 5px;
+    border: none;
+}
+
+/* Вкладки */
+/* Оформление панели вкладок */
+QTabWidget::pane {
+    border: 2px solid #7289bb; /* Граница панели вкладок */
+    border-radius: 8px;
+    background-color: #ffffff; /* Белый фон панели */
+}
+
+/* Общий стиль вкладок */
+QTabBar::tab {
+    background-color: #f5f5f5; /* Светлый фон вкладок */
+    border: 2px solid #dddddd; /* Граница вкладок */
+    border-radius: 8px;        /* Скруглённые углы */
+    padding: 10px 20px;        /* Внутренние отступы */
+    margin: 2px;               /* Расстояние между вкладками */
+    font-size: 14px;           /* Размер текста вкладок */
+    color: #333333;            /* Цвет текста вкладок */
+    transition: all 0.2s ease; /* Анимация для плавного перехода */
+}
+
+/* Стиль выбранной вкладки */
+QTabBar::tab:selected {
+    background-color: #98AFE1; /* Акцентный цвет для активной вкладки */
+    border: 2px solid #4b587a; /* Граница для активной вкладки */
+    color: white;              /* Белый текст для активной вкладки */
+    font-weight: bold;         /* Жирный текст */
+    margin-bottom: 2px;       /* Соединение вкладки с панелью */
+}
+
+/* Стиль вкладок при наведении */
+QTabBar::tab:!selected:hover {
+    background-color: #98AFE1; /* Светло-серый фон при наведении */
+    border: 2px solid #98AFE1; /* Изменение цвета границы при наведении */
+    color: #000000;            /* Чёрный текст */
+}
+
+/* Неактивные вкладки */
+QTabBar::tab:!selected {
+    background-color: #D0D8FB; /* Стильный пастельный голубой фон */
+    border: 2px solid  #ffffff; /* Светло-серая граница */
+    color: #333333;            /* Тёмный текст для неактивных вкладок */
+}
+
+/* Задать фиксированную ширину вкладок */
+QTabBar::tab {
+    width: 150px; /* Фиксированная ширина */
+    height: 40px; /* Фиксированная высота */
+}
+
+
+/* Выпадающие списки */
+QComboBox {
+    background-color: #ffffff;
+    border: 2px solid #c4c4c4;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 14px;
+}
+
+QComboBox:focus {
+    border-color: #98AFE1;
+}
+
+QComboBox::drop-down {
+    background: #98AFE1;
+    border-left: 1px solid #c4c4c4; /* Разделительная линия между текстом и стрелкой */
+    width: 20px;
+}
+
+QComboBox::down-arrow {
+    image: url(:/icons/arrow_down.png); /* Укажите свой путь к иконке */
+    width: 14px;
+    height: 14px;
+}
+
+QComboBox::down-arrow:pressed {
+    position: relative;
+    top: 1px; /* Эффект нажатия */
+}
+
+
+/* Прогресс-бар */
+QProgressBar {
+    border: 2px solid #c4c4c4;
+    border-radius: 5px;
+    background-color: #ffffff;
+    text-align: center;
+    font-size: 14px;
+    color: #4a4a4a;
+}
+
+QProgressBar::chunk {
+    background-color: #7289bb; /* Акцентный цвет заполнения */
+    width: 20px;
+}
+
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QTabBar::tab {
+        height: 70px;  /* Укажите подходящую высоту вкладок */
+        width: 200px;   /* Укажите подходящую ширину вкладок */
+        writing-mode: horizontal-tb;  /* Указывает горизонтальное направление текста */
+    }
+
+QTabBar::tab:last {
+    margin-top: 70px; /* Увеличенный отступ для последней вкладки */
+}
+
+QTabBar::tab:last {
+    margin-left: 65px;
+    border-radius: 45px;    /* Скругление углов */
+    padding: 10px;         /* Внутренний отступ */
+    height: 70px;  /* Укажите подходящую высоту вкладок */
+    width: 70px;   /* Укажите подходящую ширину вкладок */
+}</string>
+      </property>
+      <property name="tabPosition">
+       <enum>QTabWidget::West</enum>
+      </property>
+      <property name="tabShape">
+       <enum>QTabWidget::Rounded</enum>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>70</width>
+        <height>200</height>
+       </size>
+      </property>
+      <property name="movable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="tab_teacher">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <attribute name="icon">
+        <iconset resource="res1.qrc">
+         <normaloff>:/icons/Страница учителя.png</normaloff>:/icons/Страница учителя.png</iconset>
+       </attribute>
+       <attribute name="title">
+        <string/>
+       </attribute>
+       <widget class="QLabel" name="teacher_label_icon">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>141</width>
+          <height>131</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel {
+        background-image: url(':/icons/classroom.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        border: 3px solid #c4c4c4; /* Опционально: рамка */
+        border-radius: 10px; /* Опционально: скругленные углы */
+    }</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QProgressBar" name="teacher_progressBar">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>370</y>
+          <width>201</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="value">
+         <number>24</number>
+        </property>
+       </widget>
+       <widget class="QTableWidget" name="teacher_table">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>180</y>
+          <width>591</width>
+          <height>131</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QTableWidget {
+	border: off;
+}</string>
+        </property>
+        <row/>
+        <row/>
+        <row/>
+        <column>
+         <property name="text">
+          <string>№</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Кол-во учеников</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Группа</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Опубликованных ДЗ</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Оставшихся ДЗ</string>
+         </property>
+        </column>
+        <item row="0" column="0">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="0" column="1">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="0" column="2">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="0" column="3">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="0" column="4">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="1" column="0">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="1" column="1">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="1" column="2">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="1" column="3">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="1" column="4">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="2" column="0">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="2" column="1">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="2" column="2">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="2" column="3">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="2" column="4">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+       </widget>
+       <widget class="QCalendarWidget" name="teacher_calendar">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>440</y>
+          <width>256</width>
+          <height>211</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">/* Основной стиль календаря */
+QCalendarWidget {
+background-color: #ffffff; /* Белый фон */
+border: 2px solid #c4c4c4; /* Серые границы */
+border-radius: 20px; /* Скруглённые углы */
+font-size: 14px; /* Размер шрифта */
+color: #333333; /* Цвет текста */
+}
+
+QCalendarWidget QWidget {
+    background-color: #d9e6f2; /* Новый цвет фона */
+    border: none;             /* Убираем рамку */
+}
+
+/* Заголовки месяцев и кнопки навигации */
+QCalendarWidget QToolButton {
+background-color: #98AFE1; /* Фон кнопок (месяц, навигация) */
+color: white; /* Белый текст */
+border: 1px solid #7289bb; /* Граница кнопок */
+border-radius: 4px; /* Скруглённые углы */
+font-weight: bold; /* Жирный шрифт */
+padding: 5px;
+}
+
+QCalendarWidget QToolButton:hover {
+background-color: #5c6e96; /* Цвет кнопки при наведении */
+}
+
+QCalendarWidget QToolButton:pressed {
+background-color: #4b587a; /* Цвет кнопки при нажатии */
+}
+
+
+/* Ячейки с днями месяца */
+QCalendarWidget QAbstractItemView:item {
+border: 1px dashed #7289bb ; /* Без границ по умолчанию */
+
+}
+
+/* Текущая дата */
+QCalendarWidget QAbstractItemView:item:selected {
+background-color: #7289bb; /* Цвет выделения текущей даты */
+color: white; /* Белый текст */
+font-weight: bold;
+}
+
+
+/* Даты из других месяцев */
+QCalendarWidget QAbstractItemView:item:!enabled {
+background-color: #f5f5f5; /* Светлый фон для дат из других месяцев */
+color: #b0b0b0; /* Серый текст */
+}
+
+/* Убираем прозрачность */
+QCalendarWidget QAbstractItemView {
+background: transparent;
+}
+
+
+/* Даты из других месяцев */
+QCalendarWidget QAbstractItemView:item:!enabled {
+    background-color: #f0f0f0; /* Светло-серый фон */
+    color: #a0a0a0;            /* Бледно-серый текст */
+    font-style: italic;        /* Курсив для визуального выделения */
+}
+
+/* Субботы */
+QCalendarWidget QAbstractItemView:item:enabled:nth-of-type(6) {
+    background-color: #FFF4E0; /* Пастельно-оранжевый фон */
+    color: #CC6600;            /* Оранжевый текст */
+    font-weight: bold;         /* Жирный шрифт */
+}
+
+/* Воскресенья */
+QCalendarWidget QAbstractItemView:item:enabled:nth-of-type(7) {
+    background-color: #FFE6E6; /* Пастельно-красный фон */
+    color: #CC0000;            /* Красный текст */
+    font-weight: bold;         /* Жирный шрифт */
+}
+
+
+</string>
+        </property>
+       </widget>
+       <widget class="QTextEdit" name="teacher_textEdit">
+        <property name="geometry">
+         <rect>
+          <x>260</x>
+          <y>450</y>
+          <width>331</width>
+          <height>201</height>
+         </rect>
+        </property>
+        <property name="html">
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:14px; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="teacher_label_notes">
+        <property name="geometry">
+         <rect>
+          <x>380</x>
+          <y>419</y>
+          <width>121</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Заметки:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="teacher_label_percent">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>330</y>
+          <width>321</width>
+          <height>81</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel {
+    color: #333333; /* Цвет текста */
+    font-size: 12px; /* Размер шрифта */
+    font-weight: bold; /* Толщина шрифта */
+    border: 2px solid #98AFE1; /* Рамка вокруг QLabel */
+    border-radius: 10px; /* Скругление углов */
+    background-color: #F0F0F0; /* Фоновый цвет */
+    padding: 7px 1px 1px 0px; /* Верхний отступ больше для текста сверху */
+}
+
+</string>
+        </property>
+        <property name="text">
+         <string>% учеников заливших последнее ДЗ  класса</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::PlainText</enum>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="teacher_comboBox_classes">
+        <property name="geometry">
+         <rect>
+          <x>270</x>
+          <y>340</y>
+          <width>50</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <item>
+         <property name="text">
+          <string>9</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>10</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>11</string>
+         </property>
+        </item>
+       </widget>
+       <widget class="QLabel" name="teacher_label_notification">
+        <property name="geometry">
+         <rect>
+          <x>330</x>
+          <y>330</y>
+          <width>261</width>
+          <height>81</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel {
+    color: #333333; /* Цвет текста */
+    font-size: 12px; /* Размер шрифта */
+    font-weight: bold; /* Толщина шрифта */
+    border: 2px solid #98AFE1; /* Рамка вокруг QLabel */
+    border-radius: 10px; /* Скругление углов */
+    background-color: #F0F0F0; /* Фоновый цвет */
+    padding: 7px 1px 1px 0px; /* Верхний отступ больше для текста сверху */
+}
+
+
+</string>
+        </property>
+        <property name="text">
+         <string>Уведомления: 2 домашки в черновиках</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::PlainText</enum>
+        </property>
+       </widget>
+       <widget class="QLabel" name="teacher_label_name">
+        <property name="geometry">
+         <rect>
+          <x>152</x>
+          <y>14</y>
+          <width>351</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel {
+	color: #5c6e96;
+	font-size: 25px; /* Размер шрифта */
+    font-weight: bold; /* Толщина шрифта */
+}
+</string>
+        </property>
+        <property name="text">
+         <string>Преподов Семён Семёныч</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="teacher_label_headertable">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>140</y>
+          <width>204</width>
+          <height>32</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Классы преподавателя:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="teacher_label_numgroups">
+        <property name="geometry">
+         <rect>
+          <x>152</x>
+          <y>106</y>
+          <width>100</width>
+          <height>32</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel {
+    color: #333333; /* Цвет текста */
+    font-size: 15px; /* Размер шрифта */
+    font-weight: bold; /* Толщина шрифта */
+    text-align: center; /* Выравнивание текста по центру */
+    border: 2px solid #98AFE1; /* Рамка вокруг QLabel */
+    border-radius: 10px; /* Скругление углов */
+    background-color: #F0F0F0; /* Фоновый цвет */
+    padding: 5px; /* Внутренние отступы */
+}
+
+
+
+</string>
+        </property>
+        <property name="text">
+         <string>Группы : 3</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="teacher_label_numclasses">
+        <property name="geometry">
+         <rect>
+          <x>152</x>
+          <y>65</y>
+          <width>97</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel {
+    color: #333333; /* Цвет текста */
+    font-size: 15px; /* Размер шрифта */
+    font-weight: bold; /* Толщина шрифта */
+    text-align: center; /* Выравнивание текста по центру */
+    border: 2px solid #98AFE1; /* Рамка вокруг QLabel */
+    border-radius: 10px; /* Скругление углов */
+    background-color: #F0F0F0; /* Фоновый цвет */
+    padding: 5px; /* Внутренние отступы */
+}
+
+
+</string>
+        </property>
+        <property name="text">
+         <string>Классы : 3</string>
+        </property>
+       </widget>
+       <zorder>teacher_label_name</zorder>
+       <zorder>teacher_label_headertable</zorder>
+       <zorder>teacher_label_numgroups</zorder>
+       <zorder>teacher_label_numclasses</zorder>
+       <zorder>teacher_label_icon</zorder>
+       <zorder>teacher_table</zorder>
+       <zorder>teacher_calendar</zorder>
+       <zorder>teacher_textEdit</zorder>
+       <zorder>teacher_label_notes</zorder>
+       <zorder>teacher_label_percent</zorder>
+       <zorder>teacher_label_notification</zorder>
+       <zorder>teacher_comboBox_classes</zorder>
+       <zorder>teacher_progressBar</zorder>
+      </widget>
+      <widget class="QWidget" name="tab_homework">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <attribute name="icon">
+        <iconset resource="res1.qrc">
+         <normaloff>:/icons/Домашние задания.png</normaloff>:/icons/Домашние задания.png</iconset>
+       </attribute>
+       <attribute name="title">
+        <string/>
+       </attribute>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>20</y>
+          <width>591</width>
+          <height>37</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QLabel" name="homework_label_filter">
+           <property name="text">
+            <string>Фильтрация по:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="homework_comboBox_filter">
+           <property name="minimumSize">
+            <size>
+             <width>70</width>
+             <height>0</height>
+            </size>
+           </property>
+           <item>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>№</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Название</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Группа ДЗ</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Статус</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="homework_label_input">
+           <property name="text">
+            <string>Введите данные:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="homework_lineEdit_input"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QTableWidget" name="homework_table">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>60</y>
+          <width>591</width>
+          <height>531</height>
+         </rect>
+        </property>
+        <row/>
+        <row/>
+        <column>
+         <property name="text">
+          <string>№</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Название</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Группа домашних работ</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Статус</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Методические рекомендации</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Входные данные для контестера</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Выходные данные для контестера</string>
+         </property>
+        </column>
+        <item row="0" column="0">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="0" column="1">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="0" column="2">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="0" column="3">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="1" column="0">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="1" column="1">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="1" column="2">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="1" column="3">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="1" column="4">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+       </widget>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>600</y>
+          <width>591</width>
+          <height>42</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QPushButton" name="homework_pushButton_add">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Добавить ДЗ</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="homework_pushButton_update">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Редактировать ДЗ</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="homework_pushButton_shadow">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Перевести в тень</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_classes">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <attribute name="icon">
+        <iconset resource="res1.qrc">
+         <normaloff>:/icons/Учебные классы.png</normaloff>:/icons/Учебные классы.png</iconset>
+       </attribute>
+       <attribute name="title">
+        <string/>
+       </attribute>
+       <widget class="QWidget" name="layoutWidget_2">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>581</width>
+          <height>37</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <widget class="QLabel" name="classes_label_filter">
+           <property name="text">
+            <string>Фильтрация по:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="classes_comboBox_filter">
+           <property name="minimumSize">
+            <size>
+             <width>70</width>
+             <height>0</height>
+            </size>
+           </property>
+           <item>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>№</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Группа ДЗ</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Список студентов</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Классный руководитель</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="classes_label_input">
+           <property name="text">
+            <string>Введите данные:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="classes_lineEdit_input"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QTableWidget" name="classes_table">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>61</y>
+          <width>581</width>
+          <height>531</height>
+         </rect>
+        </property>
+        <property name="sizeIncrement">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="baseSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="cursor" stdset="0">
+         <cursorShape>ArrowCursor</cursorShape>
+        </property>
+        <property name="showGrid">
+         <bool>true</bool>
+        </property>
+        <row/>
+        <row/>
+        <row/>
+        <column>
+         <property name="text">
+          <string>№</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Группа ДЗ</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Список учеников</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Класнный руководитель</string>
+         </property>
+        </column>
+        <item row="0" column="0">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="0" column="1">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="0" column="3">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="1" column="0">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="1" column="1">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="1" column="3">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="2" column="0">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+       </widget>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>600</y>
+          <width>571</width>
+          <height>42</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QPushButton" name="classes_pushButton_add">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Создать новый класс</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="classes_pushButton_update">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Редактировать класс</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="classes_pushButton_shadow">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Сделать теневым</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_groups">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <attribute name="icon">
+        <iconset resource="res1.qrc">
+         <normaloff>:/icons/Группы домашних заданий.png</normaloff>:/icons/Группы домашних заданий.png</iconset>
+       </attribute>
+       <attribute name="title">
+        <string/>
+       </attribute>
+       <widget class="QWidget" name="layoutWidget_3">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>581</width>
+          <height>37</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <item>
+          <widget class="QLabel" name="groups_label_filter">
+           <property name="text">
+            <string>Фильтрация по:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="groups_comboBox_filter">
+           <property name="minimumSize">
+            <size>
+             <width>70</width>
+             <height>0</height>
+            </size>
+           </property>
+           <item>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Название группы</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="groups_label_input">
+           <property name="text">
+            <string>Введите данные:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="groups_lineEdit_input"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QTableWidget" name="groups_table">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>61</y>
+          <width>581</width>
+          <height>541</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">table {
+    width: 100%;           /* Задаем таблице ширину */
+    table-layout: auto;    /* Автоматическая ширина столбцов по содержимому */
+}
+
+th, td {
+    padding: 5px;         /* Отступы для ячеек */
+    border: 1px solid #ccc;  /* Границы ячеек */
+}</string>
+        </property>
+        <column>
+         <property name="text">
+          <string>Название группы</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Примечание</string>
+         </property>
+        </column>
+       </widget>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>610</y>
+          <width>581</width>
+          <height>42</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QPushButton" name="groups_pushButton_add">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="sizeIncrement">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Добавить группу</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="groups_pushButton_update">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Редактировать группу</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="groups_pushButton_shadow">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Сделать группу теневой</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_students">
+       <attribute name="icon">
+        <iconset resource="res1.qrc">
+         <normaloff>:/icons/Ученики.png</normaloff>:/icons/Ученики.png</iconset>
+       </attribute>
+       <attribute name="title">
+        <string/>
+       </attribute>
+       <widget class="QTableWidget" name="students_table">
+        <property name="geometry">
+         <rect>
+          <x>-1</x>
+          <y>59</y>
+          <width>591</width>
+          <height>541</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <row>
+         <property name="text">
+          <string/>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string/>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string/>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string/>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string/>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string/>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string/>
+         </property>
+        </row>
+        <column>
+         <property name="text">
+          <string>ФИО</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Класс</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Номер телефона</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Ссылка на аккаунт в мессенджере</string>
+         </property>
+        </column>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_6">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>610</y>
+          <width>581</width>
+          <height>42</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_11">
+         <item>
+          <widget class="QPushButton" name="students_pushButton_add">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Добавить ученика</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="students_pushButton_update">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Редактировать</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="students_pushButton_shadow">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Перевести в тень</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QLabel" name="students_label_input">
+        <property name="geometry">
+         <rect>
+          <x>294</x>
+          <y>10</y>
+          <width>152</width>
+          <height>35</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Введите данные:</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="students_lineEdit_input">
+        <property name="geometry">
+         <rect>
+          <x>452</x>
+          <y>10</y>
+          <width>137</width>
+          <height>35</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="students_comboBox_filter">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>10</y>
+          <width>138</width>
+          <height>35</height>
+         </rect>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>70</width>
+          <height>0</height>
+         </size>
+        </property>
+        <item>
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>ФИО</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Класс</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Номер телефона</string>
+         </property>
+        </item>
+       </widget>
+       <widget class="QLabel" name="students_label_filter">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>144</width>
+          <height>35</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Фильтрация по:</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_basket">
+       <attribute name="icon">
+        <iconset resource="res1.qrc">
+         <normaloff>:/icons/bin (2).png</normaloff>:/icons/bin (2).png</iconset>
+       </attribute>
+       <attribute name="title">
+        <string/>
+       </attribute>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>590</y>
+          <width>521</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QPushButton" name="basket_pushButton_recover">
+           <property name="text">
+            <string>Восстановить</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="basket_pushButton_delete">
+           <property name="text">
+            <string>Удалить</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="res1.qrc"/>
+ </resources>
+ <connections/>
+</ui>
