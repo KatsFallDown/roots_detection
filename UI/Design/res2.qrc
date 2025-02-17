@@ -1,0 +1,8 @@
+<RCC>
+  <qresource>
+    <file>icons/hide.png</file>
+    <file>icons/in.png</file>
+    <file>icons/user.png</file>
+    <file>icons/view.png</file>
+  </qresource>
+</RCC>

@@ -1,101 +1,132 @@
 from PyQt6 import QtWidgets
-from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox, QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton, QFormLayout, QTableWidgetItem
-from school import Ui_MainWindow
+from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import QMainWindow, QPushButton, QLabel, QStatusBar
+
+from Helper import Helper
+from UI.Design.school import Ui_MainWindow
+from UI.Tabs.Basket import Basket
+from UI.Tabs.Classes import Classes
+from UI.Tabs.HomeworkGroups import HomeworkGroups
+from UI.Tabs.Homeworks import Homeworks
+from UI.Tabs.Students import Students
+from UI.Tabs.Teacher import Teacher
+from data import Data
+from gasket import Gasket
+
 
 class SchoolApp(QMainWindow):
-    def __init__(self):
+    def __init__(self, gasket: Gasket):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        # Подключение кнопок к обработчикам
-        self.ui.classes_pushButton_add.clicked.connect(self.open_add_class_dialog)
-        self.ui.groups_pushButton_add.clicked.connect(self.open_add_group_dialog)
-        self.ui.homework_pushButton_add.clicked.connect(self.open_add_homework_dialog)
-        self.ui.students_pushButton_add.clicked.connect(self.open_add_student_dialog)
+        self.setWindowTitle("School Management System")
 
-        self.load_initial_data()
+        # Центрируем окно при запуске
+        self.center_on_screen()
 
-    def load_initial_data(self):
-        """Загрузка данных в таблицы при запуске приложения."""
-        self.ui.classes_table.setRowCount(3)  # Количество строк
-        self.ui.classes_table.setItem(0, 0, QTableWidgetItem("9"))
-        self.ui.classes_table.setItem(0, 1, QTableWidgetItem("Математика"))
-        self.ui.classes_table.setItem(0, 2, QTableWidgetItem("Иван Иванов"))
+        self.gasket = gasket
 
-    def open_add_class_dialog(self):
-        dialog, inputs = self.create_input_dialog("Добавить класс", ["№", "Группа ДЗ", "Классный руководитель"])
-        if dialog.exec():
-            row_position = self.ui.classes_table.rowCount()
-            self.ui.classes_table.insertRow(row_position)
-            self.ui.classes_table.setItem(row_position, 0, QTableWidgetItem(inputs["№"].text()))
-            self.ui.classes_table.setItem(row_position, 1, QTableWidgetItem(inputs["Группа ДЗ"].text()))
-            self.ui.classes_table.setItem(row_position, 2, QTableWidgetItem(inputs["Классный руководитель"].text()))
-            QMessageBox.information(self, "Добавление класса", "Класс добавлен успешно!")
+        self.teacher = Teacher(self)
+        self.classes = Classes(self,gasket)
+        self.homeworks = Homeworks(self, gasket)
+        self.homework_groups= HomeworkGroups(self, gasket)
+        self.students = Students(self, gasket)
+        self.basket = Basket(self, gasket)
 
-    def open_add_group_dialog(self):
-        dialog, inputs = self.create_input_dialog("Добавить группу", ["Название группы", "Примечание"])
-        if dialog.exec():
-            row_position = self.ui.groups_table.rowCount()
-            self.ui.groups_table.insertRow(row_position)
-            self.ui.groups_table.setItem(row_position, 0, QTableWidgetItem(inputs["Название группы"].text()))
-            self.ui.groups_table.setItem(row_position, 1, QTableWidgetItem(inputs["Примечание"].text()))
-            QMessageBox.information(self, "Добавление группы", "Группа добавлена успешно!")
+        self.data = Data(gasket, self)
+        self.helper = Helper(self)
 
-    def open_add_homework_dialog(self):
-        dialog, inputs = self.create_input_dialog("Добавить домашнее задание", ["№", "Название", "Группа домашних работ", "Статус", "Методические рекомендации", "Входные данные для контестера", "Выходные данные для контестера"])
-        if dialog.exec():
-            row_position = self.ui.homework_table.rowCount()
-            self.ui.homework_table.insertRow(row_position)
-            self.ui.homework_table.setItem(row_position, 0, QTableWidgetItem(inputs["№"].text()))
-            self.ui.homework_table.setItem(row_position, 1, QTableWidgetItem(inputs["Название"].text()))
-            self.ui.homework_table.setItem(row_position, 2, QTableWidgetItem(inputs["Группа домашних работ"].text()))
-            self.ui.homework_table.setItem(row_position, 3, QTableWidgetItem(inputs["Статус"].text()))
-            self.ui.homework_table.setItem(row_position, 4, QTableWidgetItem(inputs["Методические рекомендации"].text()))
-            self.ui.homework_table.setItem(row_position, 5, QTableWidgetItem(inputs["Выходные данные для контестера"].text()))
-            QMessageBox.information(self, "Добавление ДЗ", "Домашнее задание добавлено успешно!")
+        # Переменные для хранения данных
+        self.classes_data = []
+        self.groups_data = []
+        self.homework_data = []
+        self.students_data = []
+        self.trash_data= []
 
-    def open_add_student_dialog(self):
-        dialog, inputs = self.create_input_dialog("Добавить ученика", ["ФИО", "Класс", "Номер телефона","Ссылка на аккаунт в мессенджере",])
-        if dialog.exec():
-            row_position = self.ui.students_table.rowCount()
-            self.ui.students_table.insertRow(row_position)
-            self.ui.students_table.setItem(row_position, 0, QTableWidgetItem(inputs["ФИО"].text()))
-            self.ui.students_table.setItem(row_position, 1, QTableWidgetItem(inputs["Класс"].text()))
-            self.ui.students_table.setItem(row_position, 2, QTableWidgetItem(inputs["Номер телефона"].text()))
-            self.ui.students_table.setItem(row_position, 3, QTableWidgetItem(inputs["Ссылка на аккаунт в мессенджере"].text()))
-            QMessageBox.information(self, "Добавление ученика", "Ученик добавлен успешно!")
+        # Подключение кнопок к обработчикам и блокировка редактирования таблиц напрямую
+        #Вкладка классов
+        self.ui.classes_pushButton_add.clicked.connect(self.classes.open_add_class_dialog)
+        self.ui.classes_pushButton_edit.clicked.connect(self.classes.open_edit_class_dialog)
+        self.ui.classes_pushButton_shadow.clicked.connect(self.classes.shadow_class)
+        self.ui.classes_table.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
 
-    def create_input_dialog(self, title, fields):
-        """Создает диалоговое окно с полями ввода."""
-        dialog = QDialog(self)
-        dialog.setWindowTitle(title)
 
-        layout = QFormLayout(dialog)
+        # Вкладка групп ДЗ
+        self.ui.groups_pushButton_add.clicked.connect(self.homework_groups.open_add_group_dialog)
+        self.ui.groups_pushButton_edit.clicked.connect(self.homework_groups.open_edit_group_dialog)
+        self.ui.groups_pushButton_shadow.clicked.connect(self.homework_groups.shadow_group)
+        self.ui.groups_table.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
 
-        inputs = {}
-        for field in fields:
-            input_field = QLineEdit(dialog)
-            layout.addRow(QLabel(field), input_field)
-            inputs[field] = input_field
 
-        buttons_layout = QVBoxLayout()
-        submit_button = QPushButton("Сохранить", dialog)
-        cancel_button = QPushButton("Отмена", dialog)
-        buttons_layout.addWidget(submit_button)
-        buttons_layout.addWidget(cancel_button)
+        # Вкладка домашек
+        self.ui.homework_pushButton_add.clicked.connect(self.homeworks.open_add_homework_dialog)
+        self.ui.homework_pushButton_edit.clicked.connect(self.homeworks.open_edit_homework_dialog)
+        self.ui.homework_pushButton_shadow.clicked.connect(self.homeworks.shadow_homework)
+        self.ui.homework_table.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
 
-        submit_button.clicked.connect(dialog.accept)
-        cancel_button.clicked.connect(dialog.reject)
 
-        layout.addRow(buttons_layout)
-        dialog.setLayout(layout)
+        # Вкладка учеников
+        self.ui.students_pushButton_add.clicked.connect(self.students.open_add_student_dialog)
+        self.ui.students_pushButton_edit.clicked.connect(self.students.open_edit_student_dialog)
+        self.ui.students_pushButton_shadow.clicked.connect(self.students.shadow_student)
+        self.ui.students_table.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
 
-        return dialog, inputs
 
-if __name__ == "__main__":
-    import sys
-    app = QApplication(sys.argv)
-    window = SchoolApp()
-    window.show()
-    sys.exit(app.exec())
+        # Вкладка корзины
+        self.ui.basket_pushButton_recover.clicked.connect(self.basket.restore_selected_objects)
+        self.ui.basket_pushButton_view.clicked.connect(self.basket.view_selected_item_cards)
+        self.ui.basket_pushButton_delete.clicked.connect(self.basket.delete_selected_objects)
+        self.ui.trash_select_all_checkbox.stateChanged.connect(self.basket.select_all_trash)
+        self.ui.trash_table.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
+
+        # Вкладка преподавателя
+        self.ui.teacher_table.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
+
+
+
+        # Создаем статус-бар вручную
+        status_bar = QStatusBar(self)
+        self.setStatusBar(status_bar)
+        status_bar.setFixedHeight(30)  # Устанавливаем высоту статус-бара
+
+        # Метка для отображения времени последнего обновления
+        self.last_updated_label = QLabel("Последнее обновление: -", self)
+
+        # Кнопка обновления 🔄
+        self.refresh_button = QPushButton(self)
+        self.refresh_button.setIcon(QIcon("Design/icons/reload.png"))
+        self.refresh_button.setToolTip("Обновить данные")
+
+        # Добавляем в статус-бар (сначала метку, потом кнопку)
+        self.statusBar().addWidget(self.last_updated_label)  # Слева
+        self.statusBar().addPermanentWidget(self.refresh_button)  # Справа
+
+
+        # Подключаем кнопку к обновлению
+        self.refresh_button.clicked.connect(self.data.load_initial_data)
+
+
+        #Фильтрация
+        self.helper.setup_filters()
+
+        self.data.load_initial_data()
+
+    def center_on_screen(self):
+        width = 870
+        height = 705
+        screen_geometry = self.screen().geometry()  # Получаем размеры экрана
+        screen_width = screen_geometry.width()
+        screen_height = screen_geometry.height()
+
+        # Проверяем, не выходит ли окно за границы экрана
+        width = min(width, screen_width)  # Ограничиваем ширину
+        height = min(height, screen_height)  # Ограничиваем высоту
+
+        # Вычисляем координаты для центрирования
+        x = (screen_width - width) // 2
+        y = (screen_height - height) // 2
+
+        self.setMinimumSize(width, height)  # Минимальный размер
+        self.setGeometry(x, y, width, height)
+
